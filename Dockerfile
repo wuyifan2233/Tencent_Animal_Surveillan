@@ -1,50 +1,21 @@
 # Start FROM Nvidia PyTorch image https://ngc.nvidia.com/catalog/containers/nvidia:pytorch
-FROM nvcr.io/nvidia/pytorch:21.05-py3
-
-# Install linux packages
-RUN apt update && apt install -y zip htop screen libgl1-mesa-glx
-
-# Install python dependencies
-COPY requirements.txt .
-RUN python -m pip install --upgrade pip
-RUN pip uninstall -y nvidia-tensorboard nvidia-tensorboard-plugin-dlprof
-RUN pip install --no-cache -r requirements.txt coremltools onnx gsutil notebook
-RUN pip install --no-cache -U torch torchvision numpy
-# RUN pip install --no-cache torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
-
-# Create working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-# Copy contents
-COPY . /usr/src/app
-
-# Set environment variables
-ENV HOME=/usr/src/app
+FROM mirrors.tencent.com/lego-platform/tlinux2.2-python3.8-qat:latest
+ENV http_proxy=http://star-proxy.oa.com:3128
+ENV https_proxy=http://star-proxy.oa.com:3128
+ENV no_proxy=".woa.com,mirrors.cloud.tencent.com,tlinux-mirror.tencent-cloud.com,tlinux-mirrorlist.tencent-cloud.com,localhost,127.0.0.1,mirrors-tlinux.tencentyun.com,.oa.com,.local,.3gqq.com,.7700.org,.ad.com,.ada_sixjoy.com,.addev.com,.app.local,.apps.local,.aurora.com,.autotest123.com,.bocaiwawa.com,.boss.com,.cdc.com,.cdn.com,.cds.com,.cf.com,.cjgc.local,.cm.com,.code.com,.datamine.com,.dvas.com,.dyndns.tv,.ecc.com,.expochart.cn,.expovideo.cn,.fms.com,.great.com,.hadoop.sec,.heme.com,.home.com,.hotbar.com,.ibg.com,.ied.com,.ieg.local,.ierd.com,.imd.com,.imoss.com,.isd.com,.isoso.com,.itil.com,.kao5.com,.kf.com,.kitty.com,.lpptp.com,.m.com,.matrix.cloud,.matrix.net,.mickey.com,.mig.local,.mqq.com,.oiweb.com,.okbuy.isddev.com,.oss.com,.otaworld.com,.paipaioa.com,.qqbrowser.local,.qqinternal.com,.qqwork.com,.rtpre.com,.sc.oa.com,.sec.com,.server.com,.service.com,.sjkxinternal.com,.sllwrnm5.cn,.sng.local,.soc.com,.t.km,.tcna.com,.teg.local,.tencentvoip.com,.tenpayoa.com,.test.air.tenpay.com,.tr.com,.tr_autotest123.com,.vpn.com,.wb.local,.webdev.com,.webdev2.com,.wizard.com,.wqq.com,.wsd.com,.sng.com,.music.lan,.mnet2.com,.tencentb2.com,.tmeoa.com,.pcg.com,www.wip3.adobe.com,www-mm.wip3.adobe.com,mirrors.tencent.com,csighub.tencentyun.com"
+RUN pip3 install matplotlib>=3.2.2 \
+	numpy>=1.18.5 \
+	opencv-python>=4.1.2 \
+	Pillow \
+	PyYAML>=5.3.1 \
+	scipy>=1.4.1 \
+	tqdm>=4.41.0 \
+	tensorboard>=2.4.1 \
+	seaborn>=0.11.0 \
+	wandb \
+	pandas \
+	thop \
+        certifi==2021.5.30 chardet==4.0.0 idna==2.10 requests==2.25.1 urllib3==1.26.6
 
 
-# Usage Examples -------------------------------------------------------------------------------------------------------
 
-# Build and Push
-# t=ultralytics/yolov5:latest && sudo docker build -t $t . && sudo docker push $t
-
-# Pull and Run
-# t=ultralytics/yolov5:latest && sudo docker pull $t && sudo docker run -it --ipc=host --gpus all $t
-
-# Pull and Run with local directory access
-# t=ultralytics/yolov5:latest && sudo docker pull $t && sudo docker run -it --ipc=host --gpus all -v "$(pwd)"/datasets:/usr/src/datasets $t
-
-# Kill all
-# sudo docker kill $(sudo docker ps -q)
-
-# Kill all image-based
-# sudo docker kill $(sudo docker ps -qa --filter ancestor=ultralytics/yolov5:latest)
-
-# Bash into running container
-# sudo docker exec -it 5a9b5863d93d bash
-
-# Bash into stopped container
-# id=$(sudo docker ps -qa) && sudo docker start $id && sudo docker exec -it $id bash
-
-# Clean up
-# docker system prune -a --volumes
