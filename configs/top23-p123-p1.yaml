@@ -1,5 +1,5 @@
-train: /apdcephfs/private_luxiferchen/yolov5/data/top23-p123-p1/train/images
-val: /apdcephfs/private_luxiferchen/yolov5/data/top23-p123-p1/val/images
+train: /apdcephfs/private_luxiferchen/Tencent_WWF/WWF_Data/top23-p123-p1/train/images
+val: /apdcephfs/private_luxiferchen/Tencent_WWF/WWF_Data/top23-p123-p1/val/images
 
 nc: 23
 names: ['baichunlu','chihu','gaoyuanshanchun','gaoyuantu','lanmaji','ma','malu','maoniu','mashe','person','xuebao','yang','yanyang','zanghu','chai','hanta','huangmomao','lang','lv','pao','sheli','shidiao','zongxiong']
