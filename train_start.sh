@@ -1,7 +1,8 @@
 wandb login 3776ee3f88e548b933163a866f440f1d98a32b1d ;
-python train.py --weights /apdcephfs/private_luxiferchen/Tencent_WWF/weights/yolov5s.pt \
+python train.py --weights /apdcephfs/private_luxiferchen/Tencent_WWF/weights/yolov5ls.pt \
 --batch 64 \
 --epochs 120 \
+--img-size 1280 \
 --data ./Tencent_Animal_Surveillance/configs/top23-p123-p1.yaml \
 --cache \
 --name single_gpu_baseline \
