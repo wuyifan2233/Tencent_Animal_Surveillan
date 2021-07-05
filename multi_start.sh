@@ -1,4 +1,4 @@
-wandb login 3776ee3f88e548b933163a866f440f1d98a32b1d ;
+# wandb login 3776ee3f88e548b933163a866f440f1d98a32b1d ;
 python -m torch.distributed.launch --nproc_per_node 8 train.py \
 --weights /apdcephfs/private_luxiferchen/Tencent_WWF/weights/yolov5s.pt \
 --batch 128 \
